@@ -3,51 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success Eddge - Winter Coaching Classes</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>SuccessEdge | Custom Gaming PCs</title>
+    <style>
+        /* --- MODERN GAMING THEME SETUP --- */
+        :root {
+            --bg-dark: #0f172a;       /* Deep dark blue/black */
+            --bg-card: #1e293b;       /* Slightly lighter for cards */
+            --neon-green: #00ff9d;    /* The "Gamer" accent color */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            letter-spacing: 1px;
+            color: white;
+        }
+        .logo span { color: var(--neon-green); } /* Colors the "Edge" part */
+        
+        .nav-links a {
+            margin-left: 25px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--neon-green); }
+
+        /* --- HERO SECTION (The Main Banner) --- */
+        .hero {
+            text-align: center;
+            padding: 8rem 2rem;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 70%);
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .hero span { color: var(--neon-green); }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem auto;
+        }
+        .btn-primary {
+            background-color: var(--neon-green);
+            color: #000;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+        }
+
+        /* --- PRODUCTS GRID --- */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .product-card:hover {
+            border-color: var(--neon-green);
+            transform: translateY(-5px);
+        }
+
+        /* Placeholder image style */
+        .card-img {
+            width: 100%;
+            height: 250px;
+            background-color: #333;
+            object-fit: cover;
+        }
+
+        .card-info { padding: 1.5rem; }
+        .card-info h3 { margin: 0 0 0.5rem 0; font-size: 1.5rem; }
+        .specs { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+        .price { font-size: 1.4rem; color: var(--neon-green); font-weight: bold; display: block; margin-bottom: 1rem;}
+        
+        .btn-buy {
+            width: 100%;
+            padding: 0.8rem;
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-buy:hover { background: var(--neon-green); color: black; }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #334155;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>🎓 Winter Coaching Classes for Class 10 Students 🎓</h1>
-        <h2>Available in Kurseong</h2>
-    </header>
-    <main>
-        <section class="banner">
-            <h2>Success Edge</h2>
-            <p><strong>Subjects</strong>: Mathematics & Science</p>
-            <p><strong>Fees</strong>:</p>
-            <ul>
-                <li>Mathematics: INR 1000 per month</li>
-                <li>Physics: INR 1000 per month</li>
-                <li>Chemistry: INR 1000 per month</li>
-                <li>Three Subjects: INR 2500 per month</li>
-            </ul>
-            <p><strong>Why Choose Us?</strong></p>
-            <ul>
-                <li>🏅 Limited Students: Only 12 students per batch</li>
-                <li>🌟 Smart Studying: Students will also be taught through videos, projects and regular tests</li>
-                <li>🌟 Personal Attention: Focus on individual progress</li>
-                <li>📚 Free Extra Classes: Additional support available</li>
-                <li>🆘 Comprehensive Help: Assistance in other subjects as well</li>
-            </ul>
-            <p><strong>Instructor</strong>:</p>
-            <p>Energetic individual with a proven track record and one of the highest scorers in Mathematics in I.C.S.E 2010</p>
-            <p><strong>Course Details</strong>:</p>
-            <ul>
-                <li>Start Date: 9th Dec 2024</li>
-                <li>Duration: 10 AM - 2 PM, 3-4 hours daily, 6 days a week</li>
-                <li>End Date: 20th Feb 2025</li>
-            </ul>
-            <p><strong>Additional Facility</strong>:</p>
-            <p>🏠 Basic ameneties like hot water, washrooms and internet available</p>
-            <p>🏠 Paying Guest Facility: Available if required</p>
-            <p>🏠 Tiffin Facility: Available if required</p>
-            <p><strong>Contact for More Details</strong>:</p>
-            <p>📞 Call or WhatsApp at 9733138301</p>
-        </section>
-    </main>
+
+    <nav>
+        <div class="logo">Success<span>Edge</span></div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#shop">Pre-Builts</a>
+            <a href="#custom">Custom Build</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Build Your <br> <span>Dream Machine</span></h1>
+        <p>Premium custom gaming PCs, workstations, and peripherals. Hand-built and stress-tested for maximum performance.</p>
+        <button class="btn-primary" onclick="scrollToShop()">View Builds</button>
+    </section>
+
+    <h2 class="section-title" id="shop">Featured Rigs</h2>
+    
+    <div class="products-grid">
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=500&q=60" class="card-img" alt="Gaming PC">
+            <div class="card-info">
+                <h3>The Starter Edge</h3>
+                <p class="specs">Intel i5 • RTX 3060 • 16GB RAM • 1TB SSD</p>
+                <span class="price">$999.00</span>
+                <button class="btn-buy" onclick="addToCart('The Starter Edge')">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=500&q=60" class="card-img" alt="High End PC">
+            <div class="card-info">
+                <h3>Pro Streamer</h3>
+                <p class="specs">AMD Ryzen 7 • RTX 4070 • 32GB RAM • 2TB NVMe</p>
+                <span class="price">$1,850.00</span>
+                <button class="btn-buy" onclick="addToCart('Pro Streamer')">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=500&q=60" class="card-img" alt="Extreme PC">
+            <div class="card-info">
+                <h3>God Mode</h3>
+                <p class="specs">Intel i9 • RTX 4090 • 64GB RAM • Liquid Cooled</p>
+                <span class="price">$3,499.00</span>
+                <button class="btn-buy" onclick="addToCart('God Mode')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <section style="background: var(--bg-card); padding: 4rem 2rem; text-align: center; margin-top: 4rem;" id="custom">
+        <h2 style="font-size: 2rem;">Want something unique?</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Tell us your budget and games, and we'll design a custom spec list for you.</p>
+        <button class="btn-primary" onclick="alert('This will open a form to request a quote!')">Request Custom Quote</button>
+    </section>
+
     <footer>
-        <p>&copy; 2024 Smart Study. All rights reserved.</p>
+        <p>&copy; 2025 SuccessEdge PC Builders. All rights reserved.</p>
     </footer>
+
+    <script>
+        function scrollToShop() {
+            document.getElementById('shop').scrollIntoView({behavior: 'smooth'});
+        }
+
+        function addToCart(productName) {
+            alert(productName + " has been added to your cart!");
+        }
+    </script>
+
 </body>
 </html>
