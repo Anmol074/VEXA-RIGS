@@ -421,6 +421,66 @@
             color: var(--text-main);
         }
 
+        /* PC Builder Styles */
+        .budget-option, .usecase-option {
+            background: var(--bg-card);
+            border: 2px solid #334155;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .budget-option:hover, .usecase-option:hover {
+            border-color: var(--neon-purple);
+            transform: translateY(-2px);
+        }
+        .budget-option.selected, .usecase-option.selected {
+            border-color: var(--neon-purple);
+            background: rgba(157, 78, 221, 0.1);
+        }
+        .budget-amount {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--neon-purple);
+            margin-bottom: 0.5rem;
+        }
+        .budget-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .usecase-title {
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }
+        .usecase-desc {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .build-specs {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #334155;
+        }
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+        .spec-label {
+            color: var(--text-muted);
+        }
+        .spec-value {
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
         /* --- FOOTER --- */
         footer {
             text-align: center;
@@ -436,11 +496,10 @@
     <nav>
         <div class="logo">VEXA<span>-RIGS</span></div>
         <div class="nav-links">
-            <a href="#">Home</a>
             <a href="#about">About</a>
-            <a href="#shop">Pre-Builts</a>
+            <a href="#builder">PC Builder</a>
             <a href="#services">Services</a>
-            <a href="#custom">Custom Build</a>
+            <a href="#custom">Custom Quote</a>
             <a href="#contact">Contact</a>
             <div class="cart-container">
                 <button class="cart-btn" onclick="openCart()">🛒</button>
@@ -450,99 +509,106 @@
     </nav>
 
     <section class="hero">
-        <h1>Welcome to <br> <span>VEXA-RIGS</span></h1>
-        <p>Premium custom gaming PCs, workstations, and peripherals. Hand-built and stress-tested for maximum performance.</p>
-        <button class="btn-primary" onclick="scrollToShop()">View Builds</button>
+        <h1>Custom PCs Built for <br> <span>Your Budget & Needs</span></h1>
+        <p>Tell us your budget and what you'll use it for. We'll design the perfect PC just for you.</p>
+        <button class="btn-primary" onclick="scrollToBuilder()">Start Building</button>
     </section>
 
     <!-- About Section -->
     <section style="padding: 4rem 2rem; background: var(--bg-dark);" id="about">
         <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
             <div>
-                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Why Choose <span style="color: var(--neon-purple);">VEXA-RIGS</span>?</h2>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Budget-Based <span style="color: var(--neon-purple);">PC Building</span></h2>
                 <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem;">
-                    With over 5 years of experience in custom PC building, we understand that every gamer and professional has unique needs. 
-                    That's why we offer personalized builds that match your budget and performance requirements.
+                    Every customer has different needs and budgets. Whether you're gaming on a tight budget, 
+                    creating content professionally, or running intensive workloads, we build PCs that match your exact requirements.
                 </p>
                 <ul style="color: var(--text-muted); line-height: 1.8;">
-                    <li>✓ Hand-picked premium components</li>
-                    <li>✓ 48-hour burn-in testing</li>
-                    <li>✓ 1-year warranty on all builds</li>
-                    <li>✓ Free setup and optimization</li>
-                    <li>✓ Local pickup and delivery in India</li>
+                    <li>✓ Custom specs based on your budget</li>
+                    <li>✓ Optimized for your specific use case</li>
+                    <li>✓ Latest components within your price range</li>
+                    <li>✓ Free consultation and recommendations</li>
+                    <li>✓ Transparent pricing, no hidden costs</li>
                 </ul>
             </div>
             <div style="text-align: center;">
-                <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=600&q=60" 
-                     alt="Custom PC Building" 
-                     style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid var(--neon-green);">
+                <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?auto=format&fit=crop&w=600&q=60" 
+                     alt="Custom PC Building Process" 
+                     style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid var(--neon-purple);">
             </div>
         </div>
     </section>
 
-    <h2 class="section-title" id="shop">Featured Rigs</h2>
-    
-    <div class="products-grid">
-        <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=500&q=60" class="card-img" alt="Gaming PC">
-            <div class="card-info">
-                <h3>The Starter Edge</h3>
-                <p class="specs">Intel i5 • RTX 3060 • 16GB RAM • 1TB SSD</p>
-                <span class="price">₹29,999 - ₹44,999</span>
-                <button class="btn-buy" onclick="addToCart('The Starter Edge')">Add to Cart</button>
-            </div>
-        </div>
+    <!-- PC Builder Section -->
+    <section style="padding: 4rem 2rem; background: var(--bg-card);" id="builder">
+        <h2 class="section-title" style="margin-top: 0;">Build Your Perfect PC</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Select your budget and tell us what you'll use your PC for. We'll create a custom build recommendation just for you.
+        </p>
 
-        <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=500&q=60" class="card-img" alt="High End PC">
-            <div class="card-info">
-                <h3>Pro Streamer</h3>
-                <p class="specs">AMD Ryzen 7 • RTX 4070 • 32GB RAM • 2TB NVMe</p>
-                <span class="price">₹49,999 - ₹79,999</span>
-                <button class="btn-buy" onclick="addToCart('Pro Streamer')">Add to Cart</button>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <!-- Budget Selector -->
+            <div style="background: var(--bg-dark); padding: 2rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 2rem;">
+                <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem; text-align: center;">Step 1: Select Your Budget</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                    <button class="budget-option" data-budget="30000-50000" onclick="selectBudget('30000-50000')">
+                        <div class="budget-amount">₹30K - ₹50K</div>
+                        <div class="budget-label">Entry Level</div>
+                    </button>
+                    <button class="budget-option" data-budget="50000-80000" onclick="selectBudget('50000-80000')">
+                        <div class="budget-amount">₹50K - ₹80K</div>
+                        <div class="budget-label">Mid Range</div>
+                    </button>
+                    <button class="budget-option" data-budget="80000-120000" onclick="selectBudget('80000-120000')">
+                        <div class="budget-amount">₹80K - ₹1.2L</div>
+                        <div class="budget-label">High End</div>
+                    </button>
+                    <button class="budget-option" data-budget="120000+" onclick="selectBudget('120000+')">
+                        <div class="budget-amount">₹1.2L+</div>
+                        <div class="budget-label">Premium</div>
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=500&q=60" class="card-img" alt="Extreme PC">
-            <div class="card-info">
-                <h3>God Mode</h3>
-                <p class="specs">Intel i9 • RTX 4090 • 64GB RAM • Liquid Cooled</p>
-                <span class="price">₹89,999 - ₹1,29,999</span>
-                <button class="btn-buy" onclick="addToCart('God Mode')">Add to Cart</button>
+            <!-- Use Case Selector -->
+            <div style="background: var(--bg-dark); padding: 2rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 2rem;">
+                <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem; text-align: center;">Step 2: What Will You Use It For?</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <button class="usecase-option" data-usecase="gaming" onclick="selectUseCase('gaming')">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎮</div>
+                        <div class="usecase-title">Gaming</div>
+                        <div class="usecase-desc">FPS, RPG, MMO games</div>
+                    </button>
+                    <button class="usecase-option" data-usecase="content-creation" onclick="selectUseCase('content-creation')">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎬</div>
+                        <div class="usecase-title">Content Creation</div>
+                        <div class="usecase-desc">Video editing, streaming</div>
+                    </button>
+                    <button class="usecase-option" data-usecase="workstation" onclick="selectUseCase('workstation')">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💼</div>
+                        <div class="usecase-title">Workstation</div>
+                        <div class="usecase-desc">CAD, 3D modeling, coding</div>
+                    </button>
+                    <button class="usecase-option" data-usecase="general" onclick="selectUseCase('general')">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
+                        <div class="usecase-title">General Use</div>
+                        <div class="usecase-desc">Office, browsing, media</div>
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&w=500&q=60" class="card-img" alt="Creator PC">
-            <div class="card-info">
-                <h3>Content Creator</h3>
-                <p class="specs">AMD Ryzen 9 • RTX 4070 Ti • 64GB RAM • 4TB SSD</p>
-                <span class="price">₹79,999 - ₹1,09,999</span>
-                <button class="btn-buy" onclick="addToCart('Content Creator')">Add to Cart</button>
+            <!-- Build Recommendation -->
+            <div id="build-recommendation" style="background: var(--bg-dark); padding: 2rem; border-radius: 12px; border: 1px solid #334155; display: none;">
+                <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem; text-align: center;">Your Recommended Build</h3>
+                <div id="build-specs" style="margin-bottom: 2rem;">
+                    <!-- Build specs will be populated by JavaScript -->
+                </div>
+                <div style="text-align: center;">
+                    <button class="btn-primary" onclick="scrollToCustom()">Get Custom Quote</button>
+                </div>
             </div>
         </div>
-
-        <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=500&q=60" class="card-img" alt="Budget PC">
-            <div class="card-info">
-                <h3>Budget Beast</h3>
-                <p class="specs">AMD Ryzen 5 • RTX 3050 • 16GB RAM • 512GB SSD</p>
-                <span class="price">₹24,999 - ₹34,999</span>
-                <button class="btn-buy" onclick="addToCart('Budget Beast')">Add to Cart</button>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=500&q=60" class="card-img" alt="Workstation PC">
-            <div class="card-info">
-                <h3>Workstation Pro</h3>
-                <p class="specs">Intel i7 • RTX A4000 • 32GB RAM • CAD Optimized</p>
-                <span class="price">₹69,999 - ₹99,999</span>
-                <button class="btn-buy" onclick="addToCart('Workstation Pro')">Add to Cart</button>
-            </div>
-        </div>
-    </div>
+    </section>
 
     <!-- Services Section -->
     <section style="padding: 4rem 2rem; background: var(--bg-card);" id="services">
@@ -748,6 +814,264 @@
     </footer>
 
     <script>
+        // PC Builder functionality
+        let selectedBudget = '';
+        let selectedUseCase = '';
+
+        const buildRecommendations = {
+            '30000-50000': {
+                gaming: {
+                    cpu: 'AMD Ryzen 5 5600',
+                    gpu: 'RTX 3060',
+                    ram: '16GB DDR4',
+                    storage: '512GB NVMe SSD',
+                    motherboard: 'B450',
+                    psu: '650W 80+ Bronze',
+                    case: 'Mid Tower',
+                    price: '₹42,000'
+                },
+                'content-creation': {
+                    cpu: 'AMD Ryzen 5 5600',
+                    gpu: 'RTX 3060',
+                    ram: '16GB DDR4',
+                    storage: '1TB NVMe SSD',
+                    motherboard: 'B450',
+                    psu: '650W 80+ Bronze',
+                    case: 'Mid Tower',
+                    price: '₹45,000'
+                },
+                workstation: {
+                    cpu: 'AMD Ryzen 5 5600',
+                    gpu: 'GTX 1650',
+                    ram: '16GB DDR4',
+                    storage: '512GB NVMe SSD',
+                    motherboard: 'B450',
+                    psu: '650W 80+ Bronze',
+                    case: 'Mid Tower',
+                    price: '₹38,000'
+                },
+                general: {
+                    cpu: 'AMD Ryzen 5 5600',
+                    gpu: 'GTX 1650',
+                    ram: '8GB DDR4',
+                    storage: '512GB SATA SSD',
+                    motherboard: 'B450',
+                    psu: '550W 80+ Bronze',
+                    case: 'Mid Tower',
+                    price: '₹32,000'
+                }
+            },
+            '50000-80000': {
+                gaming: {
+                    cpu: 'AMD Ryzen 7 5700X',
+                    gpu: 'RTX 4070',
+                    ram: '32GB DDR4',
+                    storage: '1TB NVMe SSD',
+                    motherboard: 'B550',
+                    psu: '750W 80+ Gold',
+                    case: 'Mid Tower RGB',
+                    price: '₹72,000'
+                },
+                'content-creation': {
+                    cpu: 'AMD Ryzen 7 5700X',
+                    gpu: 'RTX 4070',
+                    ram: '32GB DDR4',
+                    storage: '2TB NVMe SSD',
+                    motherboard: 'B550',
+                    psu: '750W 80+ Gold',
+                    case: 'Mid Tower RGB',
+                    price: '₹78,000'
+                },
+                workstation: {
+                    cpu: 'AMD Ryzen 7 5700X',
+                    gpu: 'RTX A2000',
+                    ram: '32GB DDR4',
+                    storage: '1TB NVMe SSD',
+                    motherboard: 'B550',
+                    psu: '750W 80+ Gold',
+                    case: 'Mid Tower',
+                    price: '₹68,000'
+                },
+                general: {
+                    cpu: 'AMD Ryzen 5 5600',
+                    gpu: 'RTX 3060',
+                    ram: '16GB DDR4',
+                    storage: '1TB NVMe SSD',
+                    motherboard: 'B450',
+                    psu: '650W 80+ Bronze',
+                    case: 'Mid Tower',
+                    price: '₹48,000'
+                }
+            },
+            '80000-120000': {
+                gaming: {
+                    cpu: 'AMD Ryzen 7 5800X3D',
+                    gpu: 'RTX 4070 Ti',
+                    ram: '32GB DDR4',
+                    storage: '2TB NVMe SSD',
+                    motherboard: 'B550',
+                    psu: '850W 80+ Gold',
+                    case: 'Mid Tower Premium',
+                    price: '₹1,05,000'
+                },
+                'content-creation': {
+                    cpu: 'AMD Ryzen 9 5900X',
+                    gpu: 'RTX 4070 Ti',
+                    ram: '64GB DDR4',
+                    storage: '4TB NVMe SSD',
+                    motherboard: 'X570',
+                    psu: '850W 80+ Gold',
+                    case: 'Full Tower',
+                    price: '₹1,18,000'
+                },
+                workstation: {
+                    cpu: 'AMD Ryzen 9 5900X',
+                    gpu: 'RTX A4000',
+                    ram: '64GB DDR4',
+                    storage: '2TB NVMe SSD',
+                    motherboard: 'X570',
+                    psu: '850W 80+ Gold',
+                    case: 'Full Tower',
+                    price: '₹1,12,000'
+                },
+                general: {
+                    cpu: 'AMD Ryzen 7 5700X',
+                    gpu: 'RTX 4070',
+                    ram: '32GB DDR4',
+                    storage: '2TB NVMe SSD',
+                    motherboard: 'B550',
+                    psu: '750W 80+ Gold',
+                    case: 'Mid Tower RGB',
+                    price: '₹85,000'
+                }
+            },
+            '120000+': {
+                gaming: {
+                    cpu: 'AMD Ryzen 9 5900X',
+                    gpu: 'RTX 4090',
+                    ram: '64GB DDR4',
+                    storage: '4TB NVMe SSD',
+                    motherboard: 'X570',
+                    psu: '1000W 80+ Platinum',
+                    case: 'Full Tower Premium',
+                    price: '₹1,85,000'
+                },
+                'content-creation': {
+                    cpu: 'AMD Ryzen 9 5950X',
+                    gpu: 'RTX 4090',
+                    ram: '128GB DDR4',
+                    storage: '8TB NVMe SSD',
+                    motherboard: 'X570',
+                    psu: '1200W 80+ Platinum',
+                    case: 'Full Tower Premium',
+                    price: '₹2,25,000'
+                },
+                workstation: {
+                    cpu: 'AMD Ryzen 9 5950X',
+                    gpu: 'RTX A6000',
+                    ram: '128GB DDR4',
+                    storage: '4TB NVMe SSD',
+                    motherboard: 'X570',
+                    psu: '1000W 80+ Platinum',
+                    case: 'Full Tower Workstation',
+                    price: '₹2,10,000'
+                },
+                general: {
+                    cpu: 'AMD Ryzen 9 5900X',
+                    gpu: 'RTX 4070 Ti',
+                    ram: '64GB DDR4',
+                    storage: '4TB NVMe SSD',
+                    motherboard: 'X570',
+                    psu: '850W 80+ Gold',
+                    case: 'Full Tower',
+                    price: '₹1,35,000'
+                }
+            }
+        };
+
+        function selectBudget(budget) {
+            selectedBudget = budget;
+            // Update button styles
+            document.querySelectorAll('.budget-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.querySelector(`[data-budget="${budget}"]`).classList.add('selected');
+            
+            checkAndShowRecommendation();
+        }
+
+        function selectUseCase(useCase) {
+            selectedUseCase = useCase;
+            // Update button styles
+            document.querySelectorAll('.usecase-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.querySelector(`[data-usecase="${useCase}"]`).classList.add('selected');
+            
+            checkAndShowRecommendation();
+        }
+
+        function checkAndShowRecommendation() {
+            if (selectedBudget && selectedUseCase) {
+                showBuildRecommendation();
+            }
+        }
+
+        function showBuildRecommendation() {
+            const recommendation = buildRecommendations[selectedBudget][selectedUseCase];
+            const buildSpecs = document.getElementById('build-specs');
+            const buildRec = document.getElementById('build-recommendation');
+            
+            let specsHtml = `
+                <div class="build-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">Processor:</span>
+                        <span class="spec-value">${recommendation.cpu}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Graphics Card:</span>
+                        <span class="spec-value">${recommendation.gpu}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Memory:</span>
+                        <span class="spec-value">${recommendation.ram}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Storage:</span>
+                        <span class="spec-value">${recommendation.storage}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Motherboard:</span>
+                        <span class="spec-value">${recommendation.motherboard}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Power Supply:</span>
+                        <span class="spec-value">${recommendation.psu}</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Case:</span>
+                        <span class="spec-value">${recommendation.case}</span>
+                    </div>
+                    <div class="spec-item" style="border-top: 2px solid var(--neon-purple); margin-top: 1rem; padding-top: 1rem;">
+                        <span class="spec-label" style="font-weight: bold; color: var(--neon-purple);">Estimated Price:</span>
+                        <span class="spec-value" style="font-weight: bold; color: var(--neon-purple); font-size: 1.2rem;">${recommendation.price}</span>
+                    </div>
+                </div>
+            `;
+            
+            buildSpecs.innerHTML = specsHtml;
+            buildRec.style.display = 'block';
+            buildRec.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToBuilder() {
+            document.getElementById('builder').scrollIntoView({behavior: 'smooth'});
+        }
+
+        function scrollToCustom() {
+            document.getElementById('custom').scrollIntoView({behavior: 'smooth'});
+        }
+
         // Cart functionality
         let cart = JSON.parse(localStorage.getItem('vexaRigsCart')) || [];
 
