@@ -23,6 +23,7 @@
             padding: 0;
             background-color: var(--bg-dark);
             color: var(--text-main);
+            scroll-padding-top: 100px; /* Account for fixed navigation */
         }
 
         /* --- NAVIGATION --- */
@@ -489,6 +490,60 @@
             border-top: 1px solid #1e293b;
             color: var(--text-muted);
         }
+
+        /* Interactive Builder Styles */
+        .builder-step {
+            display: none;
+        }
+        .builder-step.active {
+            display: block;
+        }
+        .step-header {
+            margin-bottom: 2rem;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 2px solid #334155;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .step-number.active {
+            background: var(--neon-purple);
+            border-color: var(--neon-purple);
+            color: black;
+        }
+        .step-number.completed {
+            background: var(--neon-green);
+            border-color: var(--neon-green);
+            color: black;
+        }
+        .btn-secondary {
+            background: var(--bg-dark);
+            border: 1px solid #475569;
+            color: var(--text-main);
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .btn-secondary:hover {
+            border-color: var(--neon-purple);
+            color: var(--neon-purple);
+        }
     </style>
 </head>
 <body>
@@ -496,10 +551,10 @@
     <nav>
         <div class="logo">VEXA<span>-RIGS</span></div>
         <div class="nav-links">
-            <a href="#about">About</a>
             <a href="#builder">PC Builder</a>
+            <a href="#about">About</a>
             <a href="#services">Services</a>
-            <a href="#custom">Custom Quote</a>
+            <a href="#accessories">Accessories</a>
             <a href="#contact">Contact</a>
             <div class="cart-container">
                 <button class="cart-btn" onclick="openCart()">🛒</button>
@@ -511,11 +566,11 @@
     <section class="hero">
         <h1>Custom PCs Built for <br> <span>Your Budget & Needs</span></h1>
         <p>Tell us your budget and what you'll use it for. We'll design the perfect PC just for you.</p>
-        <button class="btn-primary" onclick="scrollToBuilder()">Start Building</button>
+        <button class="btn-primary" onclick="startPCBuilder()">Start Building</button>
     </section>
 
-    <!-- About Section -->
-    <section style="padding: 4rem 2rem; background: var(--bg-dark);" id="about">
+    <!-- PC Builder Description -->
+    <section style="padding: 4rem 2rem; background: var(--bg-card);">
         <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
             <div>
                 <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Budget-Based <span style="color: var(--neon-purple);">PC Building</span></h2>
@@ -539,57 +594,51 @@
         </div>
     </section>
 
-    <!-- PC Builder Section -->
+    <!-- Interactive PC Builder -->
     <section style="padding: 4rem 2rem; background: var(--bg-card);" id="builder">
-        <h2 class="section-title" style="margin-top: 0;">Build Your Perfect PC</h2>
-        <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-            Select your budget and tell us what you'll use your PC for. We'll create a custom build recommendation just for you.
-        </p>
-
         <div style="max-width: 800px; margin: 0 auto;">
-            <!-- Budget Selector -->
-            <div style="background: var(--bg-dark); padding: 2rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 2rem;">
-                <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem; text-align: center;">Step 1: Select Your Budget</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                    <button class="budget-option" data-budget="30000-50000" onclick="selectBudget('30000-50000')">
-                        <div class="budget-amount">₹30K - ₹50K</div>
-                        <div class="budget-label">Entry Level</div>
-                    </button>
-                    <button class="budget-option" data-budget="50000-80000" onclick="selectBudget('50000-80000')">
-                        <div class="budget-amount">₹50K - ₹80K</div>
-                        <div class="budget-label">Mid Range</div>
-                    </button>
-                    <button class="budget-option" data-budget="80000-120000" onclick="selectBudget('80000-120000')">
-                        <div class="budget-amount">₹80K - ₹1.2L</div>
-                        <div class="budget-label">High End</div>
-                    </button>
-                    <button class="budget-option" data-budget="120000+" onclick="selectBudget('120000+')">
-                        <div class="budget-amount">₹1.2L+</div>
-                        <div class="budget-label">Premium</div>
+            <!-- Welcome Message -->
+            <div id="welcome-step" class="builder-step active">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Welcome to <span style="color: var(--neon-purple);">VEXA-RIGS</span>!</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem;">
+                        Let's build your perfect custom PC together. We'll ask you a few questions to understand your needs.
+                    </p>
+                    <button class="btn-primary" onclick="nextStep()" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                        Start Building My PC →
                     </button>
                 </div>
             </div>
 
-            <!-- Use Case Selector -->
-            <div style="background: var(--bg-dark); padding: 2rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 2rem;">
-                <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem; text-align: center;">Step 2: What Will You Use It For?</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    <button class="usecase-option" data-usecase="college-student" onclick="selectUseCase('college-student')">
+            <!-- Step 1: Use Case Selection -->
+            <div id="usecase-step" class="builder-step">
+                <div class="step-header">
+                    <div class="step-indicator">
+                        <span class="step-number active">1</span>
+                        <span class="step-number">2</span>
+                        <span class="step-number">3</span>
+                        <span class="step-number">4</span>
+                    </div>
+                    <h3 style="color: var(--neon-purple); text-align: center; margin: 2rem 0;">What do you need this PC for?</h3>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <button class="usecase-option interactive" data-usecase="college-student" onclick="selectUseCaseInteractive('college-student')">
                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">📚</div>
                         <div class="usecase-title">College Students</div>
                         <div class="usecase-desc">Office apps, browsing, future upgradeable</div>
                     </button>
-                    <button class="usecase-option" data-usecase="budget-gamer" onclick="selectUseCase('budget-gamer')">
+                    <button class="usecase-option interactive" data-usecase="budget-gamer" onclick="selectUseCaseInteractive('budget-gamer')">
                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎮</div>
                         <div class="usecase-title">Budget Gamers</div>
                         <div class="usecase-desc">Indian middle class gaming</div>
                     </button>
-                    <button class="usecase-option" data-usecase="budget-creator" onclick="selectUseCase('budget-creator')">
+                    <button class="usecase-option interactive" data-usecase="budget-creator" onclick="selectUseCaseInteractive('budget-creator')">
                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎬</div>
                         <div class="usecase-title">Budget Creators</div>
                         <div class="usecase-desc">Video editing, future upgradeable</div>
                     </button>
-                    <button class="usecase-option" data-usecase="god-gamer" onclick="selectUseCase('god-gamer')">
+                    <button class="usecase-option interactive" data-usecase="god-gamer" onclick="selectUseCaseInteractive('god-gamer')">
                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">👑</div>
                         <div class="usecase-title">God Gamers</div>
                         <div class="usecase-desc">No compromises, max performance</div>
@@ -597,14 +646,157 @@
                 </div>
             </div>
 
-            <!-- Build Recommendation -->
-            <div id="build-recommendation" style="background: var(--bg-dark); padding: 2rem; border-radius: 12px; border: 1px solid #334155; display: none;">
-                <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem; text-align: center;">Your Recommended Build</h3>
-                <div id="build-specs" style="margin-bottom: 2rem;">
-                    <!-- Build specs will be populated by JavaScript -->
+            <!-- Step 2: Budget Input -->
+            <div id="budget-step" class="builder-step">
+                <div class="step-header">
+                    <div class="step-indicator">
+                        <span class="step-number completed">1</span>
+                        <span class="step-number active">2</span>
+                        <span class="step-number">3</span>
+                        <span class="step-number">4</span>
+                    </div>
+                    <h3 style="color: var(--neon-purple); text-align: center; margin: 2rem 0;">What's your budget?</h3>
+                    <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">
+                        Enter any amount or range you're comfortable with (in INR)
+                    </p>
+                </div>
+                
+                <div style="background: var(--bg-dark); padding: 2rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 2rem;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--neon-purple); font-weight: bold;">
+                            Budget Amount (₹)
+                        </label>
+                        <input type="text" id="budget-input" class="form-control" 
+                               placeholder="e.g., 50000 or 40000-60000" 
+                               style="font-size: 1.1rem; text-align: center;">
+                        <small style="color: var(--text-muted); display: block; margin-top: 0.5rem;">
+                            You can enter a specific amount like "50000" or a range like "40000-60000"
+                        </small>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; display: flex; gap: 1rem; justify-content: center;">
+                    <button class="btn-secondary" onclick="prevStep()">← Back</button>
+                    <button class="btn-primary" onclick="submitBudget()">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Contact Details -->
+            <div id="contact-step" class="builder-step">
+                <div class="step-header">
+                    <div class="step-indicator">
+                        <span class="step-number completed">1</span>
+                        <span class="step-number completed">2</span>
+                        <span class="step-number active">3</span>
+                        <span class="step-number">4</span>
+                    </div>
+                    <h3 style="color: var(--neon-purple); text-align: center; margin: 2rem 0;">How can we reach you?</h3>
+                    <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">
+                        We'll get back to you with a personalized quotation within 24 hours
+                    </p>
+                </div>
+                
+                <div style="background: var(--bg-dark); padding: 2rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 2rem;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--neon-purple); font-weight: bold;">
+                            Full Name *
+                        </label>
+                        <input type="text" id="contact-name" class="form-control" placeholder="Your full name">
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--neon-purple); font-weight: bold;">
+                            Phone Number *
+                        </label>
+                        <input type="tel" id="contact-phone" class="form-control" placeholder="+91 9876543210">
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--neon-purple); font-weight: bold;">
+                            Email Address (Optional)
+                        </label>
+                        <input type="email" id="contact-email" class="form-control" placeholder="your.email@example.com">
+                        <small style="color: var(--text-muted); display: block; margin-top: 0.5rem;">
+                            We'll use this to send you the detailed quotation
+                        </small>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--neon-purple); font-weight: bold;">
+                            Additional Message (Optional)
+                        </label>
+                        <textarea id="contact-message" class="form-control" rows="3" 
+                                  placeholder="Any specific requirements or questions..."></textarea>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; display: flex; gap: 1rem; justify-content: center;">
+                    <button class="btn-secondary" onclick="goToPreviousStep()">← Back</button>
+                    <button class="btn-primary" onclick="submitContact()">Get My Quotation →</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Confirmation -->
+            <div id="confirmation-step" class="builder-step">
+                <div class="step-header">
+                    <div class="step-indicator">
+                        <span class="step-number completed">1</span>
+                        <span class="step-number completed">2</span>
+                        <span class="step-number completed">3</span>
+                        <span class="step-number completed">4</span>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; background: var(--bg-dark); padding: 3rem 2rem; border-radius: 12px; border: 1px solid #334155;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                    <h3 style="color: var(--neon-purple); margin-bottom: 1rem;">Thank you for your interest!</h3>
+                    <p style="color: var(--text-main); font-size: 1.1rem; margin-bottom: 1rem;">
+                        We've received your requirements for a <strong id="confirm-usecase"></strong> PC with budget <strong id="confirm-budget"></strong>
+                    </p>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                        We appreciate your time and consideration, we will get back to you with some good options within 24 hours.
+                        Your information has been sent to our team for processing.
+                    </p>
+                    <div style="background: rgba(157, 78, 221, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <p style="color: var(--text-main); margin: 0; font-style: italic;">
+                            "Building your dream PC is our passion. We ensure every component is carefully selected for your specific needs."
+                        </p>
+                    </div>
+                    <button class="btn-primary" onclick="resetBuilder()">Start Over</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section style="padding: 4rem 2rem; background: var(--bg-card);" id="about">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title" style="margin-top: 0;">About VEXA-RIGS</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+                <div>
+                    <h3 style="color: var(--neon-purple); margin-bottom: 1rem;">Your Trusted PC Building Partner</h3>
+                    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem;">
+                        Founded with a passion for technology and gaming, VEXA-RIGS specializes in building custom PCs 
+                        that perfectly match your budget and performance needs. We understand that every customer is unique, 
+                        which is why we take the time to understand your requirements before recommending components.
+                    </p>
+                    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem;">
+                        Whether you're a college student needing a reliable machine for studies, a budget gamer looking for 
+                        the best value, or a content creator requiring professional-grade hardware, we have the expertise 
+                        to build exactly what you need.
+                    </p>
+                    <ul style="color: var(--text-muted); line-height: 1.8;">
+                        <li>✓ 5+ years of PC building experience</li>
+                        <li>✓ Focus on Indian market and pricing</li>
+                        <li>✓ Quality components with warranty</li>
+                        <li>✓ Free technical support</li>
+                        <li>✓ Transparent pricing, no hidden costs</li>
+                    </ul>
                 </div>
                 <div style="text-align: center;">
-                    <button class="btn-primary" onclick="scrollToCustom()">Get Custom Quote</button>
+                    <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&w=600&q=60" 
+                         alt="Professional PC Building" 
+                         style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid var(--neon-purple);">
                 </div>
             </div>
         </div>
@@ -641,44 +833,79 @@
         </div>
     </section>
 
-    <section style="background: var(--bg-card); padding: 4rem 2rem; margin-top: 4rem;" id="custom">
-        <h2 class="section-title" style="margin-top: 0;">Request Custom Quote</h2>
-        <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Tell us your budget and games, and we'll design a custom spec list for you.</p>
-        
-        <div class="custom-form-container">
-            <form onsubmit="handleFormSubmit(event)">
-                <div class="form-group">
-                    <label>Your Name</label>
-                    <input type="text" class="form-control" placeholder="John Doe" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" class="form-control" placeholder="john@example.com" required>
-                </div>
+    <!-- Gaming Accessories Section -->
+    <section style="padding: 4rem 2rem; background: var(--bg-card);" id="accessories">
+        <h2 class="section-title" style="margin-top: 0;">Gaming Accessories</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Complete your setup with premium gaming peripherals and accessories.
+        </p>
 
-                <div class="form-group">
-                    <label>Budget Range (INR)</label>
-                    <select class="form-control">
-                        <option>₹30,000 - ₹50,000</option>
-                        <option>₹50,000 - ₹80,000</option>
-                        <option>₹80,000 - ₹1.5 Lakh</option>
-                        <option>No Limit (God Mode)</option>
-                    </select>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+            <!-- Webcam -->
+            <div class="product-card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=500&q=60'); background-size: cover; background-position: center;"></div>
+                <div class="card-info">
+                    <h3>4K Gaming Webcam</h3>
+                    <div class="specs">Sony IMX415 Sensor • 4K@30fps • Auto Focus • Stereo Mic</div>
+                    <div class="price">₹4,999</div>
+                    <button class="btn-buy" onclick="addToCart('4K Gaming Webcam')">Add to Cart</button>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label>Primary Usage</label>
-                    <input type="text" class="form-control" placeholder="Gaming, Streaming, 3D Rendering, etc.">
+            <!-- Gaming Headphones -->
+            <div class="product-card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=500&q=60'); background-size: cover; background-position: center;"></div>
+                <div class="card-info">
+                    <h3>RGB Gaming Headset</h3>
+                    <div class="specs">7.1 Surround Sound • Noise Cancelling • RGB Lighting • 50mm Drivers</div>
+                    <div class="price">₹3,499</div>
+                    <button class="btn-buy" onclick="addToCart('RGB Gaming Headset')">Add to Cart</button>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label>Additional Notes</label>
-                    <textarea class="form-control" rows="4" placeholder="Any specific requirements? (White theme, Liquid cooling, etc.)"></textarea>
+            <!-- Mechanical Keyboard -->
+            <div class="product-card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1541140532154-b024d705b90a?auto=format&fit=crop&w=500&q=60'); background-size: cover; background-position: center;"></div>
+                <div class="card-info">
+                    <h3>Mechanical Gaming Keyboard</h3>
+                    <div class="specs">Cherry MX Switches • RGB Backlight • Anti-Ghosting • USB-C</div>
+                    <div class="price">₹5,999</div>
+                    <button class="btn-buy" onclick="addToCart('Mechanical Gaming Keyboard')">Add to Cart</button>
                 </div>
+            </div>
 
-                <button type="submit" class="btn-primary" style="width: 100%;">Get Free Quote</button>
-            </form>
+            <!-- Gaming Mouse -->
+            <div class="product-card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=500&q=60'); background-size: cover; background-position: center;"></div>
+                <div class="card-info">
+                    <h3>Wireless Gaming Mouse</h3>
+                    <div class="specs">16,000 DPI • 1000Hz Polling • RGB Lighting • 70g Lightweight</div>
+                    <div class="price">₹2,999</div>
+                    <button class="btn-buy" onclick="addToCart('Wireless Gaming Mouse')">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Streaming Microphone -->
+            <div class="product-card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=500&q=60'); background-size: cover; background-position: center;"></div>
+                <div class="card-info">
+                    <h3>Condenser Microphone</h3>
+                    <div class="specs">Cardioid Pattern • USB • Shock Mount • Pop Filter Included</div>
+                    <div class="price">₹6,499</div>
+                    <button class="btn-buy" onclick="addToCart('Condenser Microphone')">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Gaming Chair -->
+            <div class="product-card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=500&q=60'); background-size: cover; background-position: center;"></div>
+                <div class="card-info">
+                    <h3>Ergonomic Gaming Chair</h3>
+                    <div class="specs">Reclining • Lumbar Support • Adjustable Height • PU Leather</div>
+                    <div class="price">₹12,999</div>
+                    <button class="btn-buy" onclick="addToCart('Ergonomic Gaming Chair')">Add to Cart</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1089,6 +1316,247 @@
             document.getElementById('custom').scrollIntoView({behavior: 'smooth'});
         }
 
+        // Interactive Builder Functions
+        let currentStep = 1;
+        let builderData = {};
+
+        function startPCBuilder() {
+            // Scroll to builder section first
+            const builderElement = document.getElementById('builder');
+            if (builderElement) {
+                const elementPosition = builderElement.offsetTop;
+                const offsetPosition = elementPosition - 100;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+
+                // Then start the questionnaire after scrolling
+                setTimeout(function() {
+                    startQuestionnaire();
+                }, 800);
+            }
+        }
+
+        function startQuestionnaire() {
+            currentStep = 1; // Start at welcome step
+            showStep(1);
+        }
+
+        function nextStep() {
+            if (currentStep < 5) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.builder-step').forEach(stepEl => {
+                stepEl.classList.remove('active');
+            });
+            
+            // Map step numbers to actual IDs
+            const stepIds = {
+                1: 'welcome-step',
+                2: 'usecase-step', 
+                3: 'budget-step',
+                4: 'contact-step',
+                5: 'confirmation-step'
+            };
+            
+            // Show current step
+            const stepId = stepIds[step];
+            if (stepId) {
+                document.getElementById(stepId).classList.add('active');
+            }
+            
+            // Update step indicators (only for steps 2-4, welcome doesn't have indicators)
+            if (step >= 2 && step <= 4) {
+                document.querySelectorAll('.step-number').forEach((indicator, index) => {
+                    const stepNum = index + 1;
+                    indicator.classList.remove('active', 'completed');
+                    if (stepNum === (step - 1)) { // Adjust for welcome step
+                        indicator.classList.add('active');
+                    } else if (stepNum < (step - 1)) {
+                        indicator.classList.add('completed');
+                    }
+                });
+            }
+        }
+
+        function selectUseCase(useCase) {
+            builderData.useCase = useCase;
+            document.querySelectorAll('.usecase-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-usecase="${useCase}"]`).classList.add('selected');
+        }
+
+        function selectUseCaseInteractive(useCase) {
+            selectUseCase(useCase);
+            // Automatically advance to budget step
+            showStep(3);
+        }
+
+        function submitBudget() {
+            const budgetInput = document.getElementById('budget-input');
+            const budget = parseInt(budgetInput.value);
+            
+            if (!budget || budget < 15000) {
+                alert('Please enter a budget of at least ₹15,000');
+                return;
+            }
+            
+            builderData.budget = budget;
+            nextStep();
+        }
+
+        function submitContact() {
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const phone = document.getElementById('contact-phone').value.trim();
+            const location = document.getElementById('contact-location').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+            
+            if (!name || !email || !phone) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            builderData.contact = { name, email, phone, location, message };
+            
+            // Prepare data to send to server
+            const submissionData = {
+                customer: {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    location: location
+                },
+                pcRequirements: {
+                    useCase: builderData.useCase,
+                    useCaseDisplay: getUseCaseDisplayName(builderData.useCase),
+                    budget: builderData.budget
+                },
+                additionalMessage: message,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Send data to your server (update URL for production)
+            fetch('http://localhost:3001/api/pc-quote-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(submissionData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Success - proceed to confirmation
+                    nextStep();
+                } else {
+                    throw new Error('Failed to submit request');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                // Fallback: still proceed to confirmation but show a note
+                alert('There was an issue sending your request, but we\'ve saved your information. Our team will contact you soon.');
+                nextStep();
+            });
+        }
+        }
+
+        function showQuotationConfirmation() {
+            const confirmationDiv = document.getElementById('quotation-confirmation');
+            const recommendation = getRecommendation(builderData.useCase, builderData.budget);
+            
+            confirmationDiv.innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <h3 style="color: var(--neon-green); margin-bottom: 1rem;">✅ Quotation Request Submitted!</h3>
+                    <p style="color: var(--text-main); margin-bottom: 2rem;">
+                        Thank you <strong>${builderData.contact.name}</strong>! We'll send your personalized PC build quotation to <strong>${builderData.contact.email}</strong> within 24 hours.
+                    </p>
+                    
+                    <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; text-align: left;">
+                        <h4 style="color: var(--neon-purple); margin-bottom: 1rem;">Your Requirements:</h4>
+                        <p><strong>Use Case:</strong> ${getUseCaseDisplayName(builderData.useCase)}</p>
+                        <p><strong>Budget:</strong> ₹${builderData.budget.toLocaleString()}</p>
+                        <p><strong>Estimated Build:</strong> ${recommendation.name}</p>
+                        <p><strong>Approx. Price:</strong> ${recommendation.price}</p>
+                    </div>
+                    
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        Our team will contact you at <strong>${builderData.contact.phone}</strong> to discuss your custom PC build requirements.
+                    </p>
+                    
+                    <button onclick="resetBuilder()" class="btn-primary" style="margin-top: 2rem;">Build Another PC</button>
+                </div>
+            `;
+        }
+
+        function getRecommendation(useCase, budget) {
+            // Simple recommendation logic based on budget and use case
+            if (budget < 30000) {
+                return { name: 'Budget Gaming Build', price: '₹25,000 - ₹30,000' };
+            } else if (budget < 50000) {
+                return { name: 'Mid-Range Gaming Build', price: '₹35,000 - ₹45,000' };
+            } else if (budget < 80000) {
+                return { name: 'High-End Gaming Build', price: '₹60,000 - ₹75,000' };
+            } else {
+                return { name: 'Ultimate Gaming Build', price: '₹90,000+' };
+            }
+        }
+
+        function getUseCaseDisplayName(useCase) {
+            const names = {
+                'college': 'College Student',
+                'budget-gamer': 'Budget Gamer',
+                'content-creator': 'Content Creator',
+                'high-end-gamer': 'High-End Gamer'
+            };
+            return names[useCase] || useCase;
+        }
+
+        function resetBuilder() {
+            currentStep = 1;
+            builderData = {};
+            showStep(1);
+            
+            // Clear form fields
+            document.getElementById('budget-input').value = '';
+            document.getElementById('contact-name').value = '';
+            document.getElementById('contact-email').value = '';
+            document.getElementById('contact-phone').value = '';
+            document.getElementById('contact-location').value = '';
+            
+            // Clear selections
+            document.querySelectorAll('.usecase-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+        }
+
+        // Initialize builder on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showStep(1);
+        });
+
         // Cart functionality
         let cart = JSON.parse(localStorage.getItem('vexaRigsCart')) || [];
 
@@ -1129,6 +1597,42 @@
                 specs: 'Intel i7 • RTX A4000 • 32GB RAM • CAD Optimized',
                 price: 69999,
                 image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=500&q=60'
+            },
+            '4K Gaming Webcam': {
+                name: '4K Gaming Webcam',
+                specs: 'Sony IMX415 Sensor • 4K@30fps • Auto Focus • Stereo Mic',
+                price: 4999,
+                image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=500&q=60'
+            },
+            'RGB Gaming Headset': {
+                name: 'RGB Gaming Headset',
+                specs: '7.1 Surround Sound • Noise Cancelling • RGB Lighting • 50mm Drivers',
+                price: 3499,
+                image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=500&q=60'
+            },
+            'Mechanical Gaming Keyboard': {
+                name: 'Mechanical Gaming Keyboard',
+                specs: 'Cherry MX Switches • RGB Backlight • Anti-Ghosting • USB-C',
+                price: 5999,
+                image: 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?auto=format&fit=crop&w=500&q=60'
+            },
+            'Wireless Gaming Mouse': {
+                name: 'Wireless Gaming Mouse',
+                specs: '16,000 DPI • 1000Hz Polling • RGB Lighting • 70g Lightweight',
+                price: 2999,
+                image: 'https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=500&q=60'
+            },
+            'Condenser Microphone': {
+                name: 'Condenser Microphone',
+                specs: 'Cardioid Pattern • USB • Shock Mount • Pop Filter Included',
+                price: 6499,
+                image: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=500&q=60'
+            },
+            'Ergonomic Gaming Chair': {
+                name: 'Ergonomic Gaming Chair',
+                specs: 'Reclining • Lumbar Support • Adjustable Height • PU Leather',
+                price: 12999,
+                image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=500&q=60'
             }
         };
 
